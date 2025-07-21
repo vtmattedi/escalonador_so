@@ -15,9 +15,10 @@ class algoritimo_base(ABC):
         raise NotImplementedError("Este método deve ser implementado por subclasses.")
     
 
-class escalonador_fifo(algoritimo_base):
+class escalonador_fcfs(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "FCFS"
 
     def escalonar(self, processos):
         return sorted(processos, key=lambda p: p.chegada)
@@ -25,6 +26,7 @@ class escalonador_fifo(algoritimo_base):
 class escalonador_sjf(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "SJF"
 
     def escalonar(self, processos):
         # Ordena os processos por tempo restante
@@ -34,6 +36,7 @@ class escalonador_sjf(algoritimo_base):
 class escalonador_rr(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "RR"
         self.quantum = 1  # Tempo de quantum padrão
         self.fila = []
     def escalonar(self, processos):
@@ -53,6 +56,7 @@ class escalonador_rr(algoritimo_base):
 class escalonador_priority(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "Priority"
 
     def escalonar(self, processos):
         # Ordena os processos por prioridade e tempo de chegada
@@ -61,6 +65,7 @@ class escalonador_priority(algoritimo_base):
 class escalonador_edf(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "EDF"
 
     def escalonar(self, processos):
         # Ordena os processos por deadline e prioridade
@@ -69,18 +74,21 @@ class escalonador_edf(algoritimo_base):
 class escalonador_lottery(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "Lottery"
     # Reorna um processo aleatório da lista de processos
     def escalonar(self, processos):
         if not processos:
             return None
-        index = random.randint(0, len(processos) - 1)
-        return processos[index]
+        processos = list(processos)  # Converte o set para lista
+        random.shuffle(processos)
+        return processos
 
 class escalonador_hrrn(algoritimo_base):
     def __init__(self):
         super().__init__()
+        self.name = "HRRN"
 
     def escalonar(self, processos):
         for p in processos:
-            p.hrrn = (p.duracao + (self.tempo - p.chegada)) / p.duracao
+            p.hrrn = (p.duracao + (p.wait_time if p.wait_time is not None else 0)) / p.duracao
         return sorted(processos, key=lambda p: (p.chegada, -p.hrrn))

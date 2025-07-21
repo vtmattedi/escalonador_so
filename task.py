@@ -6,7 +6,7 @@ class taskStruct():
         self.chegada = chegada
         self.duracao = duracao
         self.prioridade = prioridade
-        self.deadline = deadline if deadline is not None else chegada + duracao
+        self.deadline = deadline if deadline is not None else float('inf')  # Default to infinity if no deadline is provided
 
 class TaskState(Enum):
     FUTURO = "futuro"
@@ -25,17 +25,24 @@ class task:
         self.response_time = None # Tempo de resposta 1ra execução
         self.turn_around_time = None # Tempo de retorno
         self.estado = TaskState.PRONTO  # Estado inicial do processo
+        self.wait_time = None # Tempo de espera
         self.taskFailed = False
 
-    def tick(self, tempo):
+    def tick(self, tempo, time_slice=1):
         if self.duracao == self.restante:
             self.response_time = tempo - self.chegada
         if self.restante > 0:
-            self.restante -= 1
+            self.restante -= time_slice
         if tempo > self.deadline and self.restante > 0:
             self.taskFailed = True
+            self.estado = TaskState.FINALIZADO
+            self.turn_around_time = tempo - self.chegada
+            self.wait_time = self.turn_around_time - self.duracao + self.restante
         if self.restante == 0:
             self.turn_around_time = tempo - self.chegada
+            self.wait_time = self.turn_around_time - self.duracao
             self.estado = TaskState.FINALIZADO
+
+        return 
     def __str__(self):
         return f"{self.nome} (Prioridade: {self.prioridade}, Chegada: {self.chegada}, Duração: {self.duracao}, Deadline: {self.deadline}, Estado: {self.estado})"

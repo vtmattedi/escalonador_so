@@ -83,7 +83,7 @@ def insert_color(text, color):
     return f"{res}\x1b[0m"
 
 def home():
-    print('\033[H', end='')
+    print('\033[1;1H', end='')
     pass
 
 def line():
