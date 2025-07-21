@@ -16,6 +16,21 @@ def show_cursor(val):
     else:
         print('\033[?25l', end='')
 
+def table(headers, rows, align=None):
+    """Print a table with headers and rows."""
+    # total_width = Each header's length + 2 spaces for each  + 2 borders + (len(headers) - 1) for the separators
+    total_width = sum(LineLength(header) + 2 for header in headers) + 2 + len(headers) - 1
+    lines = []
+    # First line (header)
+    line = '+' + '-' * (total_width - 2) + '+'
+    lines.append(line)
+
+
+    # Last line (header)
+    line = '+' + '-' * (total_width - 2) + '+'
+    lines.append(line)
+    print(table_str)
+
 def hcenter(text, width=None, char=' ', mode = 0):
     """Center text in a given width with a specified character."""
     if width is None:

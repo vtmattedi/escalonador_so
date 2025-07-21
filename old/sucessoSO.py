@@ -571,6 +571,7 @@ class EscalonadorLoteria(Escalonador):
                 elegiveis = {p: t for p, t in bilhetes.items() if not p.concluido and p.chegada <= self.tempo}
                 
                 if elegiveis:
+                    
                     total_bilhetes = sum(elegiveis.values())
                     sorteio = random.randint(1, total_bilhetes)
                     acumulado = 0

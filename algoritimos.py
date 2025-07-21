@@ -79,9 +79,12 @@ class escalonador_lottery(algoritimo_base):
     def escalonar(self, processos):
         if not processos:
             return None
-        processos = list(processos)  # Converte o set para lista
-        random.shuffle(processos)
-        return processos
+        tickets = []
+        for p in processos:
+            n_tickets = max(1, 10 - p.duracao)  # Define o número de tickets baseado na duração
+            tickets.extend([p] * n_tickets)
+        random.shuffle(tickets)
+        return tickets
 
 class escalonador_hrrn(algoritimo_base):
     def __init__(self):
