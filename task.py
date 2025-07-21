@@ -27,6 +27,8 @@ class task:
         self.estado = TaskState.FUTURO  # Estado inicial do processo
         self.wait_time = None # Tempo de espera
         self.taskFailed = False
+        # self.coreAfinity = None  # pinneToCore
+        # self.softCoreAfinity = None  # set and managed by the SO to avoid task migration
 
     def tick(self, tempo, time_slice=1):
         if self.duracao == self.restante:
