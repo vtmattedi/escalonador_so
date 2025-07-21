@@ -1,5 +1,13 @@
 import random
 from enum import Enum
+class taskStruct():
+    def __init__(self, nome, chegada, duracao, prioridade=0, deadline=None):
+        self.nome = nome
+        self.chegada = chegada
+        self.duracao = duracao
+        self.prioridade = prioridade
+        self.deadline = deadline if deadline is not None else chegada + duracao
+
 class TaskState(Enum):
     FUTURO = "futuro"
     PRONTO = "pronto"

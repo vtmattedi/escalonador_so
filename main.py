@@ -1,6 +1,6 @@
 from simulator import Simulator
 import algoritimos
-from task import task
+from task import task, taskStruct
 # Algoritmos, Preemptabilidade
 # Cada tupla contém o algoritmo e se é preemptável ou não
 ALGORITMOS = [
@@ -17,14 +17,6 @@ ALGORITMOS = [
 
 # Lista de tarefas iniciais
 # Cada tupla contém (nome, chegada, duração, prioridade, deadline)
-class taskStruct():
-    def __init__(self, nome, chegada, duracao, prioridade=0, deadline=None):
-        self.nome = nome
-        self.chegada = chegada
-        self.duracao = duracao
-        self.prioridade = prioridade
-        self.deadline = deadline if deadline is not None else chegada + duracao
-
 START_TASKS = [
     taskStruct("Processo1", chegada=0, duracao=5, prioridade=1, deadline=10),
     taskStruct("Processo2", chegada=1, duracao=3, prioridade=2, deadline=8),
@@ -39,14 +31,14 @@ START_TASKS = [
 def create_tasks():
     tasks = []
     for i in range(len(START_TASKS)):
-        tasks.append(task(*START_TASKS[i]))
+        tasks.append(task(**START_TASKS[i].__dict__))
     return tasks
 if __name__ == "__main__":
     data = []
     for alg, preemptable in ALGORITMOS:
         print(f"Testando algoritmo: {alg.__name__}, Preemptável: {preemptable}")
         simulator = Simulator(alg(), preemptable)
-        for _task in START_TASKS:
+        for _task in create_tasks():
             simulator.adicionar_processo(_task)
         simulator.start_sync()
         data.append((alg.__name__, preemptable, simulator.context_switches, simulator.calc_stat()))
