@@ -53,7 +53,8 @@ class Simulator():
 
     def tick(self):
         for job in self.processos:
-            if self.tempo >= job.chegada and job not in self.processos_disponiveis and job.estado != TaskState.FINALIZADO:
+            if self.tempo >= job.chegada and job not in self.processos_disponiveis and job.estado == TaskState.FUTURO:
+                job.estado = TaskState.PRONTO
                 self.processos_disponiveis.add(job)
         # Se o escalonador não for preemptável, não faz nada até a tarefa atual terminar
         if self.current_task is not None and not self.preemptable:

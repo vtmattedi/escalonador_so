@@ -24,7 +24,7 @@ class task:
         self.restante = duracao
         self.response_time = None # Tempo de resposta 1ra execução
         self.turn_around_time = None # Tempo de retorno
-        self.estado = TaskState.PRONTO  # Estado inicial do processo
+        self.estado = TaskState.FUTURO  # Estado inicial do processo
         self.wait_time = None # Tempo de espera
         self.taskFailed = False
 

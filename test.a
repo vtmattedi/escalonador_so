@@ -46,12 +46,12 @@ Estatisticas: EDF (Preemptable)
 Algoritmo: escalonador_lottery, Preemptavel: False, Trocas de Contexto: 5
 Estatisticas: Lottery (Non-Preemptable)
 	 context_switches: 5 
-	 total_time: 17.0 
+	 total_time: 15.0 
 	 num_processes: 5 
 	 avg_waiting_time: 5.0 
-	 avg_turnaround_time: 7.8 
+	 avg_turnaround_time: 7.4 
 	 avg_response_time: 6.0 
-	 failed_processes: 1 
+	 failed_processes: 2 
 Algoritmo: escalonador_hrrn, Preemptavel: True, Trocas de Contexto: 5
 Estatisticas: HRRN (Preemptable)
 	 context_switches: 5 
